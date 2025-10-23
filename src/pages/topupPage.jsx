@@ -45,7 +45,7 @@ const TopupPage = () => {
       setShowConfirm(false);
       setSelectedAmount(null);
       setCustomAmount("");
-    } catch{
+    } catch {
       setTopUpResult("error");
       setShowConfirm(false);
     }
@@ -60,81 +60,76 @@ const TopupPage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 md:pr-[10%]">
-      <button
-        onClick={() => navigate("/")}
-        className="text-gray-600 hover:text-gray-800 mb-4 flex items-center gap-2"
-      >
-        ← Kembali
-      </button>
-
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">Top Up</h1>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6 pr-[10%] items-center">
+    <div className="min-h-[calc(100vh-64px)] p-4 md:p-6 lg:p-8 text-black">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6 mb-6 lg:pr-[10%]">
           {profileLoading ? (
-            <div className="md:col-span-2 rounded-lg h-32 animate-pulse" />
+            <div className="lg:col-span-2 bg-gray-200 rounded-lg h-32 animate-pulse" />
           ) : (
-            <div className="md:col-span-2">
+            <div className="lg:col-span-2">
               <ProfileCard profile={profile} />
             </div>
           )}
 
           {balanceLoading ? (
-            <div className="md:col-span-3 rounded-lg h-32 animate-pulse" />
+            <div className="lg:col-span-3 bg-gray-200 rounded-lg h-32 animate-pulse" />
           ) : (
-            <div className="md:col-span-3">
+            <div className="lg:col-span-3">
               <BalanceCard balance={balance} showBalance={true} />
             </div>
           )}
         </div>
 
-      <div className=" rounded-lg  p-6 mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          Silakan masukan nominal Top Up
-        </label>
-
-        <div className="relative mb-6">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
-            Rp
-          </span>
-          <input
-            type="text"
-            value={customAmount}
-            onChange={handleCustomAmountChange}
-            placeholder="0"
-            className="w-full border border-gray-300 rounded-lg py-3 pl-12 pr-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
+        <div className="mb-6 lg:pr-[10%]">
+          <h2 className="text-md">Silahkan masukkan</h2>
+          <p className="text-xl font-semibold">Nominal Top Up</p>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start lg:pr-[10%]">
+          <div className="space-y-2 md:col-span-3">
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
+                Rp
+              </span>
+              <input
+                type="text"
+                value={customAmount}
+                onChange={handleCustomAmountChange}
+                placeholder="masukkan nominal top up"
+                className="w-full border border-gray-300 rounded-md py-3 pl-12 pr-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
 
-        <div className="grid grid-cols-3 gap-3">
-          {amounts.map((amount) => (
             <button
-              key={amount}
-              onClick={() => handleAmountSelect(amount)}
-              className={`py-3 px-4 border-2 rounded-lg font-semibold transition-colors ${
-                selectedAmount === amount
-                  ? "border-red-500 bg-red-50 text-red-600"
-                  : "border-gray-300 text-gray-700 hover:border-gray-400"
-              }`}
+              onClick={() => setShowConfirm(true)}
+              disabled={!activeAmount || activeAmount < 10000}
+              className="w-full bg-red-500 text-white py-4 rounded-lg font-semibold text-lg hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
             >
-              Rp {amount.toLocaleString("id-ID")}
+              Top Up
             </button>
-          ))}
+
+            <p className="text-sm text-gray-500 text-center">
+              Minimal top up adalah Rp 10.000
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 content-start md:col-span-2">
+            {amounts.map((amount) => (
+              <button 
+                key={amount}
+                onClick={() => handleAmountSelect(amount)}
+                className={`py-4 px-4 border rounded-md font-semibold transition-colors ${
+                  selectedAmount === amount
+                    ? "border-red-500 bg-red-50 text-red-600"
+                    : "border-gray-300 text-gray-700 hover:border-gray-400"
+                }`}
+              >
+                Rp {amount.toLocaleString("id-ID")}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <button
-        onClick={() => setShowConfirm(true)}
-        disabled={!activeAmount || activeAmount < 10000}
-        className="w-full bg-red-500 text-white py-4 rounded-lg font-semibold text-lg hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-      >
-        Top Up
-      </button>
-
-      <p className="text-sm text-gray-500 text-center mt-4">
-        Minimal top up adalah Rp 10.000
-      </p>
-
-      {/* Confirmation Modal */}
       <ConfirmationModal
         isOpen={showConfirm && !topUpResult}
         onClose={() => setShowConfirm(false)}

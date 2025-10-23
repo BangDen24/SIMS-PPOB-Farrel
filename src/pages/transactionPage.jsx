@@ -20,7 +20,7 @@ const TransactionPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] p-8 text-black">
+    <div className="min-h-[calc(100vh-64px)] px-8 pb-8 py-6 text-black">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6 pr-[10%] items-center">
           {profileLoading ? (

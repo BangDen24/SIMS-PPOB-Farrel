@@ -80,7 +80,7 @@ const PaymentPage = () => {
           </div>
         </div>
 
-        <div className="max-w-2xl mx-auto lg:pr-[10%]">
+        <div className="max-w-6xl mx-auto lg:pr-[10%]">
           <p className="text-sm text-gray-600 mb-2">Pembayaran</p>
           <div className="flex items-center gap-3 mb-6">
             <img
@@ -109,7 +109,7 @@ const PaymentPage = () => {
                 onClick={() => navigate("/topup")}
                 className="text-sm underline font-semibold hover:text-yellow-900"
               >
-                Top Up Sekarang →
+                Top Up Sekarang
               </button>
             </div>
           )}
